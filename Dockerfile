@@ -13,4 +13,4 @@ RUN gem install bundler -v 2.6.2 && \
 
 COPY . .
 
-CMD ["puma", "-p", "8080", "-b", "tcp://0.0.0.0"]
+CMD bash -c "bundle exec puma -p ${PORT:-10000} -b tcp://0.0.0.0"
