@@ -64,6 +64,16 @@ class App::Services::Orders < App::Services::Base
     return_errors!(e.message)
   end
 
+  # Authenticated user — fetch their own orders by phone number
+  def my_orders
+    user = App.cu.user_obj
+    ds = model.where(customer_phone: user.phone_number.to_s.strip)
+              .order(Sequel.desc(:created_at))
+    return_success(ds.all.map(&:to_pos))
+  rescue => e
+    return_errors!(e.message)
+  end
+
   # Admin — update order status
   def update_status
     new_status = qs[:status]

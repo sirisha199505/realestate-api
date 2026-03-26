@@ -33,6 +33,9 @@ class App::Routes < Roda
       r.get do
         File.read(File.join(App.root, 'public', 'index.html'))
       end
+      r.get String do
+        File.read(File.join(App.root, 'public', 'index.html'))
+      end
     end
 
     r.on 'api' do
@@ -66,6 +69,7 @@ class App::Routes < Roda
       r.on 'me' do
         r.get('info') { Users[r].info }
         r.put('update-password') { Users[r].update_password }
+        r.get('orders') { Orders[r].my_orders }
       end
 
       # ── Admin-only routes ─────────────────────────────────────────
