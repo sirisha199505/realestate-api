@@ -49,6 +49,15 @@ class App::Routes < Roda
       r.post('validate-password-token') { Users[r].validate_password_token }
       r.post('reset-password') { Users[r].reset_password }
 
+      # Health check — GET /api  or  GET /api/health
+      r.get do
+        { status: 'ok', service: 'Abivya Real Estate API', version: 1 }
+      end
+
+      r.get 'health' do
+        { status: 'ok', service: 'Abivya Real Estate API', version: 1 }
+      end
+
       r.get 'version' do
         { status: 'success', version: 1 }
       end
