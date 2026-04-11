@@ -32,8 +32,8 @@ class App::Helpers::CurrentUser
 
     def token
       return nil if space[:auth_token].blank?
-      
-      @token ||= space[:auth_token].gsub("Bearer ", "")
+
+      space[:token] ||= space[:auth_token].gsub("Bearer ", "")
     end
 
     def decoded_token
@@ -78,7 +78,7 @@ class App::Helpers::CurrentUser
     end
 
     def admin?
-      user_obj&.role === 0
+      user_obj&.role == 1
     end
 
     def entity_ids
@@ -100,7 +100,7 @@ class App::Helpers::CurrentUser
     def clear_cache!
       space.delete(:decoded)
       space.delete(:user_obj)
-      @token = nil
+      space.delete(:token)
     end
   end
 
