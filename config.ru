@@ -13,8 +13,13 @@ Bundler.require(:default, App.env)
 
 use Rack::Cors do
   allow do
-    origins App.development? ? '*' : 'https://abivyagroup.com'
-    resource '*', headers: :any, methods: [:get, :post, :delete, :put, :patch, :options, :head]
+    origins(
+      /\Ahttps?:\/\/(?:www\.)?abivyagroup\.com\z/, # production (http/https, with/without www)
+      'http://localhost:3000',
+      'http://localhost:5173'
+    )
+    resource '*', headers: :any, methods: [:get, :post, :delete, :put, :patch, :options, :head],
+                  credentials: false
   end
 end
 
